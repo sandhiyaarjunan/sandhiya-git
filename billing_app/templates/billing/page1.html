@@ -1,0 +1,55 @@
+<form method="POST">
+    {% csrf_token %}
+    <h3>Billing Page</h3>
+    <label>Customer Email: </label> <input type="email" name="email" required>
+    
+    <div id="bill-section">
+        <button type="button" onclick="addRow()">Add New</button>
+        <div class="row">
+            <input type="text" name="product_id[]" placeholder="Product ID">
+            <input type="number" name="quantity[]" placeholder="Quantity">
+        </div>
+    </div>
+
+    <hr>
+    <div class="denominations-section" style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 10px;">
+        <h4>Denominations</h4>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px; max-width: 200px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>500</label> <input type="number" name="denom_500" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>50</label> <input type="number" name="denom_50" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>20</label> <input type="number" name="denom_20" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>10</label> <input type="number" name="denom_10" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>5</label> <input type="number" name="denom_5" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>2</label> <input type="number" name="denom_2" value="0" style="width: 80px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <label>1</label> <input type="number" name="denom_1" value="0" style="width: 80px;">
+            </div>
+        </div>
+    </div>
+
+    <label>Cash paid by customer:</label> 
+    <input type="number" step="0.01" name="cash_paid" value="0" required>
+
+    <button type="submit">Generate Bill</button>
+</form>
+
+<script>
+function addRow() {
+    let div = document.createElement('div');
+    div.innerHTML = '<input type="text" name="product_id[]" placeholder="Product ID"> <input type="number" name="quantity[]" placeholder="Quantity">';
+    document.getElementById('bill-section').appendChild(div);
+}
+</script>

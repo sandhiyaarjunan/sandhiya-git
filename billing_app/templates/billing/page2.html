@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        .summary { margin-left: auto; width: 300px; margin-top: 20px; text-align: right; }
+        .denoms { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <h2>Billing Page</h2>
+    <p><strong>Customer Email:</strong> {{ customer_email }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Tax %</th>
+                <th>Tax Payable</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product_id }}</td>
+                <td>{{ item.unit_price|stringformat:".2f" }}</td>
+                <td>{{ item.qty }}</td>
+                <td>{{ item.tax_percent }}%</td>
+                <td>{{ item.tax|stringformat:".2f" }}</td>
+                <td>{{ item.total|stringformat:".2f" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="summary">
+        <p>Total price without tax: <strong>{{ total_without_tax|stringformat:".2f" }}</strong></p>
+        <p>Total tax payable: <strong>{{ total_tax|stringformat:".2f" }}</strong></p>
+        <p>Net price: <strong>{{ net_price|stringformat:".2f" }}</strong></p>
+        <p>Balance payable to customer: <strong>{{ balance|stringformat:".2f" }}</strong></p>
+    </div>
+
+    <div class="denoms">
+        <h4>Balance Denominations:</h4>
+        {% for note, count in denoms.items %}
+            <p>{{ note }}: {{ count }}</p>
+        {% endfor %}
+    </div>
+
+    <br>
+    <a href="{% url 'billing_home' %}">Back to Billing</a>
+</body>
+</html>
